@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -49,8 +50,14 @@ public class DriverFactory {
 //			url = new URL(props.getProperty("url"));
 //					urlUtil = new UrlUtil(getThreadLocalDriver());
 		urlUtil = new UrlUtil(getThreadLocalDriver());
-		urlUtil.openUrl(props.getProperty("url"));
-		openUrl(props.getProperty("url"));
+		URL url;
+		try {
+			url = new URL(props.getProperty("url"));
+			urlUtil.openUrl(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
 		return getThreadLocalDriver();
 	}
 
