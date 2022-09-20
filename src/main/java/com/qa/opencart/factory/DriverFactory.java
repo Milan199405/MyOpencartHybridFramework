@@ -51,8 +51,8 @@ public class DriverFactory {
 		URL url;
 		try {
 			url = new URL(props.getProperty("url"));
-			urlUtil = new UrlUtil(getThreadLocalDriver());
-			urlUtil.openUrl(url);
+//			urlUtil = new UrlUtil(getThreadLocalDriver());
+			openUrl(url);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -144,4 +144,16 @@ public class DriverFactory {
 
 		return path;
 	}
+
+	public void openUrl(URL url) {
+		try {
+			if (url == null)
+				throw new Exception("URL is null");
+
+		} catch (Exception e) {
+
+		}
+		getThreadLocalDriver().navigate().to(url);
+	}
+
 }
