@@ -33,7 +33,7 @@ public class DriverFactory {
 		String browser = props.getProperty("browser").trim();
 		highlight = props.getProperty("highlight");
 		optionsManager = new OptionsManager(props);
-		urlUtil = new UrlUtil(getThreadLocalDriver());
+//		urlUtil = new UrlUtil(getThreadLocalDriver());
 
 		if (browser.equals("chrome")) {
 			WebDriverManager.chromedriver().setup();
@@ -48,6 +48,7 @@ public class DriverFactory {
 		getThreadLocalDriver().manage().window().fullscreen();
 		getThreadLocalDriver().manage().deleteAllCookies();
 //		getThreadLocalDriver().get(props.getProperty("url").trim());
+		urlUtil = new UrlUtil(getThreadLocalDriver());
 		URL url;
 		try {
 			url = new URL(props.getProperty("url"));

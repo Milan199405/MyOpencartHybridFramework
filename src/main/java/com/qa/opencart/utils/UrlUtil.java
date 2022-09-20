@@ -52,6 +52,7 @@ public class UrlUtil {
 		} catch (Exception e) {
 
 		}
+		driver.get(baseUrl + "/" + "?" + queryParam);
 	}
 
 }
