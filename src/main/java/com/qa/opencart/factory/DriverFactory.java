@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
@@ -11,8 +12,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import com.qa.opencart.utils.UrlUtil;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -22,7 +21,7 @@ public class DriverFactory {
 	private Properties props;
 	public static String highlight;
 	public OptionsManager optionsManager;
-	public UrlUtil urlUtil;
+//	public UrlUtil urlUtil;
 
 	static ThreadLocal<WebDriver> tlLocalDriver = new ThreadLocal<WebDriver>();
 
@@ -46,8 +45,8 @@ public class DriverFactory {
 		getThreadLocalDriver().manage().window().maximize();
 		getThreadLocalDriver().manage().deleteAllCookies();
 //			url = new URL(props.getProperty("url"));
-					urlUtil = new UrlUtil(getThreadLocalDriver());
-					urlUtil.openUrl(props.getProperty("url"));
+//					urlUtil = new UrlUtil(getThreadLocalDriver());
+		openUrl(props.getProperty("url"));
 		return getThreadLocalDriver();
 	}
 
@@ -137,12 +136,48 @@ public class DriverFactory {
 		return path;
 	}
 
-	/*
-	 * public void openUrl(URL url) { try { if (url == null) throw new
-	 * Exception("URL is null");
-	 * 
-	 * } catch (Exception e) {
-	 * 
-	 * } getThreadLocalDriver().navigate().to(url); }
-	 */
+	public void openUrl(String url) {
+		try {
+			if (url == null)
+				throw new Exception("url is null");
+
+		} catch (Exception e) {
+
+		}
+		getThreadLocalDriver().get(url);
+	}
+
+	public void openUrl(URL url) {
+		try {
+			if (url == null)
+				throw new Exception("URL is null");
+
+		} catch (Exception e) {
+
+		}
+		getThreadLocalDriver().navigate().to(url);
+	}
+
+	public void openUrl(String baseUrl, String path) {
+		try {
+			if (baseUrl == null)
+				throw new Exception("Base url is null");
+
+		} catch (Exception e) {
+
+		}
+		getThreadLocalDriver().get(baseUrl + "/" + path);
+	}
+
+	public void openUrl(String baseUrl, String path, String queryParam) {
+		try {
+			if (baseUrl == null)
+				throw new Exception("Base url is null");
+
+		} catch (Exception e) {
+
+		}
+		getThreadLocalDriver().get(baseUrl + "/" + "?" + queryParam);
+	}
+
 }
