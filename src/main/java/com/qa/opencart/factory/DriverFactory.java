@@ -13,6 +13,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.qa.opencart.utils.UrlUtil;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
@@ -21,7 +23,7 @@ public class DriverFactory {
 	private Properties props;
 	public static String highlight;
 	public OptionsManager optionsManager;
-//	public UrlUtil urlUtil;
+	public UrlUtil urlUtil;
 
 	static ThreadLocal<WebDriver> tlLocalDriver = new ThreadLocal<WebDriver>();
 
@@ -46,6 +48,8 @@ public class DriverFactory {
 		getThreadLocalDriver().manage().deleteAllCookies();
 //			url = new URL(props.getProperty("url"));
 //					urlUtil = new UrlUtil(getThreadLocalDriver());
+		urlUtil = new UrlUtil(getThreadLocalDriver());
+		urlUtil.openUrl(props.getProperty("url"));
 		openUrl(props.getProperty("url"));
 		return getThreadLocalDriver();
 	}
