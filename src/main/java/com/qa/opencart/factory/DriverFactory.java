@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
@@ -45,17 +43,11 @@ public class DriverFactory {
 		} else {
 			System.out.println("Please enter valid browser name...");
 		}
-		getThreadLocalDriver().manage().window().fullscreen();
+		getThreadLocalDriver().manage().window().maximize();
 		getThreadLocalDriver().manage().deleteAllCookies();
-//		getThreadLocalDriver().get(props.getProperty("url").trim());
-		URL url;
-		try {
-			url = new URL(props.getProperty("url"));
-//			urlUtil = new UrlUtil(getThreadLocalDriver());
-			openUrl(url);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+//			url = new URL(props.getProperty("url"));
+					urlUtil = new UrlUtil(getThreadLocalDriver());
+					urlUtil.openUrl(props.getProperty("url"));
 		return getThreadLocalDriver();
 	}
 
@@ -145,15 +137,12 @@ public class DriverFactory {
 		return path;
 	}
 
-	public void openUrl(URL url) {
-		try {
-			if (url == null)
-				throw new Exception("URL is null");
-
-		} catch (Exception e) {
-
-		}
-		getThreadLocalDriver().navigate().to(url);
-	}
-
+	/*
+	 * public void openUrl(URL url) { try { if (url == null) throw new
+	 * Exception("URL is null");
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * } getThreadLocalDriver().navigate().to(url); }
+	 */
 }
