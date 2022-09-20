@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
@@ -11,6 +13,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.qa.opencart.utils.UrlUtil;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -20,6 +24,7 @@ public class DriverFactory {
 	private Properties props;
 	public static String highlight;
 	public OptionsManager optionsManager;
+	public UrlUtil urlUtil;
 
 	static ThreadLocal<WebDriver> tlLocalDriver = new ThreadLocal<WebDriver>();
 
@@ -28,6 +33,7 @@ public class DriverFactory {
 		String browser = props.getProperty("browser").trim();
 		highlight = props.getProperty("highlight");
 		optionsManager = new OptionsManager(props);
+		urlUtil = new UrlUtil(getThreadLocalDriver());
 
 		if (browser.equals("chrome")) {
 			WebDriverManager.chromedriver().setup();
@@ -41,7 +47,14 @@ public class DriverFactory {
 		}
 		getThreadLocalDriver().manage().window().fullscreen();
 		getThreadLocalDriver().manage().deleteAllCookies();
-		getThreadLocalDriver().get(props.getProperty("url").trim());
+//		getThreadLocalDriver().get(props.getProperty("url").trim());
+		URL url;
+		try {
+			url = new URL(props.getProperty("url"));
+			urlUtil.openUrl(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		return getThreadLocalDriver();
 	}
 
@@ -127,8 +140,7 @@ public class DriverFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return path;
 	}
-
 }
