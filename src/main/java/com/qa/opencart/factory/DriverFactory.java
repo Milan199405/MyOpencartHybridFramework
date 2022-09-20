@@ -48,10 +48,10 @@ public class DriverFactory {
 		getThreadLocalDriver().manage().window().fullscreen();
 		getThreadLocalDriver().manage().deleteAllCookies();
 //		getThreadLocalDriver().get(props.getProperty("url").trim());
-		urlUtil = new UrlUtil(getThreadLocalDriver());
 		URL url;
 		try {
 			url = new URL(props.getProperty("url"));
+			urlUtil = new UrlUtil(getThreadLocalDriver());
 			urlUtil.openUrl(url);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
