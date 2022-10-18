@@ -71,16 +71,20 @@ public class DriverFactory {
 		String env = System.getProperty("env");
 		System.out.println("ENV --- " + env);
 		if (env == null) {
-			try {
-				ip = new FileInputStream("./src/test/resources/config/config.properties");
-				props.load(ip);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			System.out.println(null + " is not a valid env.");
 		} else {
 			switch (env.toLowerCase()) {
+
+			case "prod":
+				try {
+					ip = new FileInputStream("./src/test/resources/config/prod.config.properties");
+					props.load(ip);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
 			case "qa":
 				try {
 					ip = new FileInputStream("./src/test/resources/config/qa.config.properties");
