@@ -15,10 +15,48 @@ public class ExcelUtil {
 	private static Object actualExcelData[][];
 
 	public static Object[][] getTestDataFromExcelSheet(String sheetName) {
+		FileInputStream ip;
+
+		String excelEnv = System.getProperty("excelEnv");
+
 		try {
-			FileInputStream ip = new FileInputStream("./src/test/resources/TestData/OpenCartAppTestData.xlsx");
-			workbook = WorkbookFactory.create(ip);
-			sheet = workbook.getSheet(sheetName);
+
+			switch (excelEnv.toLowerCase()) {
+			case "dev":
+				ip = new FileInputStream("./src/test/resources/TestData/DEV_OpenCartAppTestData.xlsx");
+				workbook = WorkbookFactory.create(ip);
+				sheet = workbook.getSheet(sheetName);
+				break;
+
+			case "qa":
+				ip = new FileInputStream("./src/test/resources/TestData/QA_OpenCartAppTestData.xlsx");
+				workbook = WorkbookFactory.create(ip);
+				sheet = workbook.getSheet(sheetName);
+				break;
+
+			case "stage":
+				ip = new FileInputStream("./src/test/resources/TestData/STAGE_OpenCartAppTestData.xlsx");
+				workbook = WorkbookFactory.create(ip);
+				sheet = workbook.getSheet(sheetName);
+				break;
+
+			case "uat":
+				ip = new FileInputStream("./src/test/resources/TestData/UAT_OpenCartAppTestData.xlsx");
+				workbook = WorkbookFactory.create(ip);
+				sheet = workbook.getSheet(sheetName);
+				break;
+
+			case "prod":
+				ip = new FileInputStream("./src/test/resources/TestData/PROD_OpenCartAppTestData.xlsx");
+				workbook = WorkbookFactory.create(ip);
+				sheet = workbook.getSheet(sheetName);
+				break;
+
+			default:
+				System.out.println("Please provide valid Excel-Env");
+				break;
+			}
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (InvalidFormatException e) {
@@ -26,7 +64,7 @@ public class ExcelUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		actualExcelData = new Object[sheet.getLastRowNum()][sheet.getRow(0).getLastCellNum()];
 
 		for (int i = 0; i < sheet.getLastRowNum(); i++) {
